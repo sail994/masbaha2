@@ -5,14 +5,16 @@ plugins {
 }
 
 kotlin {
-    // 1. Déclaration de la cible Android
+    // 1. Enregistrement correct de la cible Android pour Kotlin 1.9.23
     androidTarget {
-        compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = "17"
+            }
         }
     }
     
-    // 2. Déclaration explicite des cibles iOS
+    // 2. Cibles iOS
     listOf(
         iosX64(),
         iosArm64(),
@@ -24,14 +26,8 @@ kotlin {
         }
     }
     
-    // 3. Configuration des sources communes et spécifiques
+    // 3. Configuration des sources sans syntaxe dépréciée
     sourceSets {
-        val androidMain by getting {
-            dependencies {
-                implementation("androidx.activity:activity-compose:1.8.2")
-            }
-        }
-        
         val commonMain by getting {
             dependencies {
                 implementation(compose.runtime)
@@ -40,6 +36,12 @@ kotlin {
                 implementation(compose.ui)
                 implementation(compose.components.resources)
                 implementation(compose.components.uiToolingPreview)
+            }
+        }
+        
+        val androidMain by getting {
+            dependencies {
+                implementation("androidx.activity:activity-compose:1.8.2")
             }
         }
     }
