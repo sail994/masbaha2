@@ -5,16 +5,9 @@ plugins {
 }
 
 kotlin {
-    // 1. Enregistrement correct de la cible Android pour Kotlin 1.9.23
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "17"
-            }
-        }
-    }
+    // Version standard compatible Gradle 8.5 / Kotlin 1.9
+    androidTarget()
     
-    // 2. Cibles iOS
     listOf(
         iosX64(),
         iosArm64(),
@@ -26,7 +19,6 @@ kotlin {
         }
     }
     
-    // 3. Configuration des sources sans syntaxe dépréciée
     sourceSets {
         val commonMain by getting {
             dependencies {
