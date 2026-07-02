@@ -1,8 +1,8 @@
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.jetbrainsCompose)
-    alias(libs.plugins.compose.compiler)
+    id("org.jetbrains.kotlin.multiplatform")
+    id("com.android.application")
+    id("org.jetbrains.compose")
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 kotlin {
@@ -13,7 +13,7 @@ kotlin {
         }
     }
     
-    // 2. Déclaration explicite des cibles iOS (pour créer les tâches de build)
+    // 2. Déclaration explicite des cibles iOS
     listOf(
         iosX64(),
         iosArm64(),
@@ -27,16 +27,21 @@ kotlin {
     
     // 3. Configuration des sources communes et spécifiques
     sourceSets {
-        androidMain.dependencies {
-            implementation(libs.androidx.activity.compose)
+        val androidMain by getting {
+            dependencies {
+                implementation("androidx.activity:activity-compose:1.9.0")
+            }
         }
-        commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material)
-            implementation(compose.ui)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
+        
+        val commonMain by getting {
+            dependencies {
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material)
+                implementation(compose.ui)
+                implementation(compose.components.resources)
+                implementation(compose.components.uiToolingPreview)
+            }
         }
     }
 }
