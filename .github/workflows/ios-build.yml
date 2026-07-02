@@ -2,13 +2,13 @@ name: Compilation iOS Multiplateforme
 
 on:
   push:
-    branches: [ main, master ] # Se déclenche dès que vous faites un git push
+    branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
 
 jobs:
   build-ios:
-    runs-on: macos-latest # Utilise un Mac virtuel sur les serveurs de GitHub
+    runs-on: macos-latest
 
     steps:
       - name: Récupérer le code du projet
@@ -24,7 +24,20 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
 
       - name: Donner les permissions d'exécution au script de compilation
-        run: chmod +x gradlew
+        run: |
+          if [ -f "gradlew" ]; then chmod +x gradlew; else cd masbaha2 && chmod +x gradlew; fi
 
       - name: Compiler le Framework pour iPhone
-        run: ./gradlew :composeApp:iosX64Binaries # Compile pour simulateur iPhone (ou iosArm64Binaries pour iPhone physique)
+        run: |
+          # On se déplace dans le bon dossier si nécessaire
+          [ -f "gradlew" ] || cd masbaha2
+                   # On lance la compilation globale des frameworks iOS (couvre toutes les cibles configurées)
+          ./gradlew :composeApp:assembleReleaseX64 --continue || ./gradlew :composeApp:linkReleaseFrameworkIosX64 || ./gradlew :composeApp:iosX64Binaries
+
+      - name: Archiver le Framework iOS pour le télécharger
+        uses: actions/upload-artifact@v4
+        with:
+          name: Masbaha-iOS-Framework
+          path: |
+            **/build/bin/iosX64/
+            **/build/cocoapods/framework/
