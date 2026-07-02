@@ -1,8 +1,7 @@
 plugins {
-    id("org.jetbrains.kotlin.multiplatform") version "2.0.0"
-    id("com.android.application") version "8.2.2"
-    id("org.jetbrains.compose") version "1.6.11"
-    id("org.jetbrains.kotlin.plugin.compose") version "2.0.0"
+    id("org.jetbrains.kotlin.multiplatform")
+    id("com.android.application")
+    id("org.jetbrains.compose") version "1.6.2"
 }
 
 kotlin {
@@ -29,7 +28,7 @@ kotlin {
     sourceSets {
         val androidMain by getting {
             dependencies {
-                implementation("androidx.activity:activity-compose:1.9.0")
+                implementation("androidx.activity:activity-compose:1.8.2")
             }
         }
         
