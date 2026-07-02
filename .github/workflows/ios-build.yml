@@ -1,0 +1,30 @@
+name: Compilation iOS Multiplateforme
+
+on:
+  push:
+    branches: [ main, master ] # Se déclenche dès que vous faites un git push
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-ios:
+    runs-on: macos-latest # Utilise un Mac virtuel sur les serveurs de GitHub
+
+    steps:
+      - name: Récupérer le code du projet
+        uses: actions/checkout@v4
+
+      - name: Configurer Java 17 (Requis pour Gradle KMP)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Configurer Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Donner les permissions d'exécution au script de compilation
+        run: chmod +x gradlew
+
+      - name: Compiler le Framework pour iPhone
+        run: ./gradlew :composeApp:iosX64Binaries # Compile pour simulateur iPhone (ou iosArm64Binaries pour iPhone physique)
