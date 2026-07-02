@@ -27,9 +27,10 @@ kotlin {
                 implementation(compose.ui)
                 implementation(compose.components.resources)
                 implementation(compose.components.uiToolingPreview)
-                
-                // CORRECTION : Ajout de Material 3 pour régler les erreurs de App.kt
                 implementation(compose.material3)
+                
+                // CORRECTION : Ajout des dépendances Room pour compiler DhikrPhrase
+                implementation("androidx.room:room-runtime:2.7.0-alpha01")
             }
         }
         
