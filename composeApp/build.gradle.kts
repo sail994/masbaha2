@@ -5,7 +5,6 @@ plugins {
 }
 
 kotlin {
-    // Version standard compatible Gradle 8.5 / Kotlin 1.9
     androidTarget()
     
     listOf(
@@ -28,6 +27,9 @@ kotlin {
                 implementation(compose.ui)
                 implementation(compose.components.resources)
                 implementation(compose.components.uiToolingPreview)
+                
+                // CORRECTION : Ajout de Material 3 pour régler les erreurs de App.kt
+                implementation(compose.material3)
             }
         }
         
