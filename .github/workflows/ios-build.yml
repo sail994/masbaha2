@@ -31,8 +31,12 @@ jobs:
         run: |
           # On se déplace dans le bon dossier si nécessaire
           [ -f "gradlew" ] || cd masbaha2
-                   # On lance la compilation globale des frameworks iOS (couvre toutes les cibles configurées)
-          ./gradlew :composeApp:assembleReleaseX64 --continue || ./gradlew :composeApp:linkReleaseFrameworkIosX64 || ./gradlew :composeApp:iosX64Binaries
+          
+          echo "=== LISTE DES TÂCHES DISPONIBLES ==="
+          ./gradlew tasks --all | grep -i "ios" || echo "Aucune tâche iOS explicite trouvée"
+          
+          echo "=== TENTATIVE DE COMPILATION GLOBALE ==="
+          ./gradlew :composeApp:assemble
 
       - name: Archiver le Framework iOS pour le télécharger
         uses: actions/upload-artifact@v4
