@@ -8,7 +8,7 @@ pluginManagement {
 }
 
 dependencyResolutionManagement {
-    // Ce mode fusionne les dépôts globaux et les dépôts spécifiques requis par iOS/Compose
+    // Permet d'éviter le blocage "prefer settings over project" causé par l'importation de Ivy
     repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
     repositories {
         google()
