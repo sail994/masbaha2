@@ -8,8 +8,8 @@ pluginManagement {
 }
 
 dependencyResolutionManagement {
-    // CORRECTION ICI : On autorise les sous-modules à ajouter leurs propres dépôts (comme Ivy pour Compose)
-    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    // Ce mode fusionne les dépôts globaux et les dépôts spécifiques requis par iOS/Compose
+    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
     repositories {
         google()
         mavenCentral()
